@@ -1,8 +1,19 @@
-# Eclipse — Simple Dark Mode Chrome Extension
+# Eclipse — Display Modes Chrome Extension
 
-A minimal **Manifest V3** Chrome extension that applies a dark-mode filter to any website,
-toggled from a small popup, and **remembered per site**. Deliberately lightweight — no
-frameworks, no build step, no DOM analysis.
+A minimal **Manifest V3** Chrome extension that applies one of several display modes to any
+website from a small popup, and **remembers your choice per site**. Deliberately lightweight —
+no frameworks, no build step, no DOM analysis.
+
+## Modes
+
+- ☀️ **Off** — the page as-is.
+- 🌙 **Dark Mode** — invert + hue-rotate (media re-inverted so photos look normal).
+- 🎨 **OLED Black** — like Dark, but forced to true black for OLED screens.
+- 🧛 **Dracula** — a solid dark red-plum themed background with light text (editor-style).
+- 🧜‍♀️ **Mermaid** — a solid deep-blue themed background with light text (editor-style).
+- 🌅 **Warm Mode** — a warm, blue-light-reducing tint; keeps the page light.
+- 📖 **Reading Mode** — dims and warms slightly for comfortable reading; keeps the page light.
+- 👓 **High Contrast** — boosts contrast for legibility.
 
 ## Install (load unpacked)
 
@@ -17,46 +28,47 @@ To update after editing files, click the **refresh/reload** icon on the Eclipse 
 
 ## Using it
 
-- Click the toolbar icon to open the popup, then toggle **On/Off**.
+- Click the toolbar icon to open the popup, then pick a mode (or **Off**).
 - The change applies to the current tab immediately — no reload needed.
-- Your choice is saved **per domain**: turning it on for `github.com` doesn't affect
-  `google.com`. When you revisit a site, it restores that site's setting on load.
-- When dark mode is on for a tab, the toolbar badge shows **ON**.
+- Your choice is saved **per domain**: setting Dark on `github.com` doesn't affect
+  `google.com`. When you revisit a site, it restores that site's mode on load.
+- When a mode is active for a tab, the toolbar badge shows a short code (DARK, OLED, DRAC, MER,
+  WARM, READ, HC).
 - On pages Chrome doesn't allow extensions to touch (e.g. `chrome://`, the Web Store, PDFs),
-  the popup shows a short note instead of a toggle.
+  the popup shows a short note instead of the mode list.
 
 ## How it works
 
-The dark effect is the classic MVP technique: invert the whole page and rotate the hue by 180°
-so colors stay roughly right, then **re-invert** media (images, video, canvas, iframes) so
-photos look normal.
-
-```css
-html { filter: invert(1) hue-rotate(180deg); }
-img, picture, video, canvas, iframe, embed, object { filter: invert(1) hue-rotate(180deg); }
-```
+Each mode is a CSS `filter` on the page. The inverting modes (Dark, OLED) also **re-invert**
+media (images, video, canvas, iframes) so photos look normal; the tinting modes (Warm, Reading,
+High Contrast) leave the page light and just adjust it. All mode definitions live in one table in
+the content script.
 
 Three pieces work together:
 
 - **Content script** (`src/content/darkMode.js`) — registered for all `http`/`https` pages and
-  run at `document_start`. On load it reads this site's saved preference from
-  `chrome.storage.local` and applies the filter *before the page paints*, so an enabled site
-  doesn't flash white on refresh. It also listens for on/off messages from the popup.
-- **Popup** (`src/popup/*`) — reads the active tab's domain, shows the current state, and on
-  toggle writes the new value to storage and tells the page to apply it right away. If the page
-  loaded before the extension was installed (so no content script is present yet), it falls back
-  to injecting the script with the `scripting` API — which then self-applies from storage.
+  run at `document_start`. On load it reads this site's saved mode from `chrome.storage.local`
+  and applies it *before the page paints*, so a themed site doesn't flash. It also listens for
+  mode changes from the popup.
+- **Popup** (`src/popup/*`) — reads the active tab's domain, shows the mode list with the
+  current one highlighted, and on selection writes the mode to storage and tells the page to
+  apply it right away. If the page loaded before the extension was installed (no content script
+  yet), it falls back to injecting the script with the `scripting` API — which then self-applies
+  from storage.
 - **Background service worker** (`src/background/background.js`) — keeps the toolbar badge in
   sync with the ON/OFF state for each tab.
 
 ### Storage shape
 
-One key per site in `chrome.storage.local`:
+One key per site in `chrome.storage.local`, holding the mode name:
 
 ```
-"eclipse:github.com"  -> true
-"eclipse:google.com"  -> false
+"eclipse:github.com"  -> "dark"
+"eclipse:reddit.com"  -> "reading"
+"eclipse:google.com"  -> "off"
 ```
+
+(Old boolean values from the on/off version are migrated: `true` is read as `"dark"`.)
 
 ## Permissions (and why)
 

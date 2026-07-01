@@ -5,8 +5,6 @@
   --dim: #9a97ad;
   --line: #2a2a38;
   --accent: #6c5ce7;
-  --on: #46d38a;
-  --off: #5b5870;
 }
 
 * {
@@ -15,7 +13,7 @@
 
 body {
   margin: 0;
-  width: 260px;
+  width: 264px;
   background: var(--bg);
   color: var(--ink);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -29,7 +27,7 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .mark {
@@ -59,41 +57,72 @@ main {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 14px;
+  padding: 10px;
 }
 
-.row {
+main[hidden] {
+  display: none;
+}
+
+.modes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mode {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.statusblock {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--off);
-  transition: background 0.15s ease;
-}
-
-.dot.on {
-  background: var(--on);
-  box-shadow: 0 0 0 3px rgba(70, 211, 138, 0.18);
-}
-
-.status {
-  font-size: 15px;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: #0f0f16;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-family: inherit;
+  font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+
+.mode:hover {
+  border-color: var(--accent);
+}
+
+.mode:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.mode .emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.mode .lbl {
+  flex: 1;
+}
+
+.mode .tick {
+  color: var(--accent);
+  font-weight: 700;
+  opacity: 0;
+}
+
+.mode.active {
+  border-color: var(--accent);
+  background: rgba(108, 92, 231, 0.14);
+}
+
+.mode.active .tick {
+  opacity: 1;
 }
 
 .site {
-  margin: 12px 0 0;
+  margin: 12px 2px 2px;
   font-size: 11.5px;
   color: var(--dim);
 }
@@ -104,62 +133,9 @@ main {
   word-break: break-all;
 }
 
-/* toggle switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 46px;
-  height: 26px;
-  flex: none;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  inset: 0;
-  cursor: pointer;
-  background: var(--off);
-  border-radius: 999px;
-  transition: background 0.18s ease;
-}
-
-.slider::before {
-  content: "";
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  top: 3px;
-  background: #fff;
-  border-radius: 50%;
-  transition: transform 0.18s ease;
-}
-
-.switch input:checked + .slider {
-  background: var(--accent);
-}
-
-.switch input:checked + .slider::before {
-  transform: translateX(20px);
-}
-
-.switch input:focus-visible + .slider {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
 .unsupported {
   margin: 12px 2px 0;
   font-size: 11.5px;
   line-height: 1.5;
   color: var(--dim);
-}
-
-main[hidden] {
-  display: none;
 }

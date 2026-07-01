@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Eclipse",
   "version": "1.0.0",
-  "description": "Toggle a simple dark mode on any website. Remembers your choice per site.",
+  "description": "Toggle a simple theme mode on any website. Remembers your choice per site.",
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
     "default_title": "Eclipse",
