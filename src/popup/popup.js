@@ -9,7 +9,7 @@ let modesEl, siteEl, main, unsupported;
 const MODES = [
   { id: "off", emoji: "☀️", label: "Off", badge: "" },
   { id: "dark", emoji: "🌙", label: "Dark Mode", badge: "DARK" },
-  { id: "oled", emoji: "🎨", label: "OLED Black", badge: "OLED" },
+  { id: "leprechaun", emoji: "🍀", label: "Leprechaun", badge: "LEP" },
   { id: "dracula", emoji: "🧛", label: "Dracula", badge: "DRAC" },
   { id: "mermaid", emoji: "🧜‍♀️", label: "Mermaid", badge: "MER" },
   { id: "warm", emoji: "🌅", label: "Warm Mode", badge: "WARM" },

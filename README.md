@@ -8,7 +8,7 @@ no frameworks, no build step, no DOM analysis.
 
 - ☀️ **Off** — the page as-is.
 - 🌙 **Dark Mode** — invert + hue-rotate (media re-inverted so photos look normal).
-- 🎨 **OLED Black** — like Dark, but forced to true black for OLED screens.
+- 🍀 **Leprechaun** — a solid green themed background with gold accents (editor-style).
 - 🧛 **Dracula** — a solid dark red-plum themed background with light text (editor-style).
 - 🧜‍♀️ **Mermaid** — a solid deep-blue themed background with light text (editor-style).
 - 🌅 **Warm Mode** — a warm, blue-light-reducing tint; keeps the page light.

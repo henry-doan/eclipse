@@ -23,11 +23,11 @@
       bg: "#fafafa",
       filter: "invert(1) hue-rotate(180deg)",
     },
-    oled: {
-      badge: "OLED",
-      invertMedia: true,
-      bg: "#ffffff", // invert of pure white = pure #000, i.e. true black
-      filter: "invert(1) hue-rotate(180deg) brightness(0.92)",
+    leprechaun: {
+      badge: "LEP",
+      type: "theme",
+      // green canvas with gold accents
+      theme: { bg: "#0d2a17", panel: "#154028", fg: "#e9ffe9", accent: "#ffcf4d", link: "#7ee787" },
     },
     dracula: {
       badge: "DRAC",
